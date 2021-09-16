@@ -1,37 +1,78 @@
 <template>
   <header>
-    <nav class="w">
-      <ul class="navLeft">
-        <li><router-link to="/main">首页</router-link></li>
-        <li><router-link to="/photoWall">照片墙</router-link></li>
-        <li><router-link to="/msgBoard">讨论区</router-link></li>
-      </ul>
-      <ul>
-        <li id="userInfo">
-          <i></i>
-          <router-link to="/">账号</router-link>
-        </li>
-      </ul>
-    </nav>
+    <div class="w clearfix">
+      <nav>
+        <ul>
+          <li>
+            <router-link to="/main">首页</router-link>
+          </li>
+          <li>
+            <router-link to="/photoWall">照片墙</router-link>
+          </li>
+          <li>
+            <router-link to="/msgBoard">讨论区</router-link>
+          </li>
+        </ul>
+      </nav>
+      <!--todo 未登录状态下显示登陆/注册-->
+      <div class="userInfo">
+        <span>{{userName}}</span>
+        <div class="arrowDown"></div>
+        <!--todo 点击箭头显示用户操作菜单（个人中心，登出）-->
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
-  name: "UserHeader"
+  name: "UserHeader",
+  computed:{
+    ...mapState(['userName'])
+  }
 }
 </script>
 
 <style scoped lang="less">
-  header {
-    background-color: skyblue;
-  }
-  .navLeft {
-    float: left;
-    & li {
-      display: block;
-      height: 40px;
+@nav-height: 40px;
+header {
+  background-color: #fff;
+}
 
+nav {
+  float: left;
+
+  & li {
+    float: left;
+    a {
+      display: block;
+      height: @nav-height;
+      line-height: @nav-height;
+      border: 1px solid red;
+      padding: 0 10px;
+      background-color: #fff;
     }
   }
+}
+
+.userInfo {
+  float: right;
+  padding-right: 25px;
+
+  span {
+    line-height: @nav-height;
+    margin-right: 5px;
+  }
+
+  .arrowDown {
+    @border-width: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: @border-width solid #000;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    transform: rotate(45deg) translateY(-1*@border-width);
+  }
+}
 </style>
