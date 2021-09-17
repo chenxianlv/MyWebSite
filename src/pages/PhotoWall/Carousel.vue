@@ -1,7 +1,7 @@
 <template>
-  <div class="focus w" @mouseenter="stopAutoPlay" @mouseleave="autoPlay">
+  <div class="focus w" @mouseenter="isAutoPlaying=false" @mouseleave="isAutoPlaying=true">
     <ul>
-      <li :id="'a'+index" v-for="(imgObj,index) in imgObjs" :key="index">
+      <li ref="index" :id="'a'+index" v-for="(imgObj,index) in imgObjs" :key="index">
         <a href="javascript:">
           <img :src="imgObj.url" alt="">
         </a>
@@ -12,8 +12,8 @@
       <li
           @click="toPic($event,index)"
           :class="{'current':activeIndex===index}"
-          v-for="(_,index) in imgObjs.length"
-          :key="index"
+          v-for="(num,index) in imgObjs.length"
+          :key="num"
       ></li>
     </ol>
     <a href="javascript:" class="button_l iconfont" @click="prePic">&#xe6ab;</a>
@@ -31,38 +31,33 @@ export default {
       olWidth: 0,
       activeIndex: 0,
       isMoving: false,
-      isAutoPlaying: false,
+      isAutoPlaying: true,
       intervalId: 0,
       imgObjs: this.$store.state.recommendImgs
     }
   },
   methods: {
     autoPlay() {
-      if (this.isAutoPlaying) return
       this.intervalId = setInterval(() => {
+        if (!this.isAutoPlaying) return
         this.nextPic()
       }, 3000)
-      this.isAutoPlaying = true
-    },
-    stopAutoPlay() {
-      clearInterval(this.intervalId)
-      this.isAutoPlaying = false
     },
     turnTo(targetIndex, next=true) {
       if (this.isMoving) return
       let index = this.activeIndex
       if (targetIndex === index) return
       if (next) {
-        document.querySelector('#a' + index).className = 'show left-leave-active left-leave'
-        document.querySelector('#a' + targetIndex).className = 'show left-enter-active left-enter'
+        this.$refs.index[index].className = 'show left-leave-active left-leave'
+        this.$refs.index[targetIndex].className = 'show left-enter-active left-enter'
       }else{
-        document.querySelector('#a' + index).className = 'show right-leave-active right-leave'
-        document.querySelector('#a' + targetIndex).className = 'show right-enter-active right-enter'
+        this.$refs.index[index].className = 'show right-leave-active right-leave'
+        this.$refs.index[targetIndex].className = 'show right-enter-active right-enter'
       }
       this.isMoving = true
       setTimeout(() => {
-        document.querySelector('#a' + index).className = ''
-        document.querySelector('#a' + targetIndex).className = 'show'
+        this.$refs.index[index].className = ''
+        this.$refs.index[targetIndex].className = 'show'
         this.isMoving = false
       }, 700)
       this.activeIndex = targetIndex
@@ -90,6 +85,9 @@ export default {
     this.olWidth = document.querySelector('.focus .circle').offsetWidth
     document.querySelector('#a' + this.activeIndex).className = 'show'
     this.autoPlay()
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalId)
   }
 }
 </script>
