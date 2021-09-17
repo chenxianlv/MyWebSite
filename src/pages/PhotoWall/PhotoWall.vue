@@ -1,26 +1,22 @@
 <template>
   <div id="PhotoWall">
-    <Carousel :imgObjs="imgObjs"></Carousel>
+    <Carousel></Carousel>
+    <Menu></Menu>
   </div>
 </template>
 
 <script>
-//todo 轮播图
 import Carousel from "@/pages/PhotoWall/Carousel"
+import Menu from "@/components/Menu/Menu"
 //todo 分类栏
 export default {
   name: "PhotoWall",
   components:{
-    Carousel,
-
+    Carousel,Menu
   },
   data() {
     return {
-      imgObjs: [
-          {url:require('@/upload/imgs/photomode_10122020_175623.png'),description:'朱迪1'},
-          {url:require('@/upload/imgs/photomode_12122020_220026.png'),description:'夜之城'},
-          {url:require('@/upload/imgs/photomode_13122020_205120.png'),description:'朱迪2'},
-      ]
+
     }
   },
 }
@@ -28,7 +24,7 @@ export default {
 
 <style scoped lang="less">
   #PhotoWall{
-    height: 600px;
-    background-color: lightpink;
+    height: 1500px;
+    background-color: #fff;
   }
 </style>

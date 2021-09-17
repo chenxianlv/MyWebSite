@@ -9,7 +9,12 @@
       </li>
     </ul>
     <ol class="circle" :style="{marginLeft:-0.5*olWidth+'px'}">
-      <li :class="{'current':activeIndex===_-1}" v-for="_ in imgObjs.length" :key="_"></li>
+      <li
+          @click="toPic($event,index)"
+          :class="{'current':activeIndex===index}"
+          v-for="(_,index) in imgObjs.length"
+          :key="index"
+      ></li>
     </ol>
     <a href="javascript:" class="button_l iconfont" @click="prePic">&#xe6ab;</a>
     <a href="javascript:" class="button_r iconfont" @click="nextPic">&#xe6ad;</a>
@@ -17,58 +22,68 @@
 </template>
 
 <script>
-//todo 添加点击小圆点跳转
 //todo 点击图片弹出详情
 export default {
   name: "Carousel",
   //imgObjs:[{url:'xx',description:'xx'}]
-  props: ['imgObjs'],
   data() {
     return {
       olWidth: 0,
       activeIndex: 0,
       isMoving: false,
-      intervalId: {}
+      isAutoPlaying: false,
+      intervalId: 0,
+      imgObjs: this.$store.state.recommendImgs
     }
   },
   methods: {
     autoPlay() {
+      if (this.isAutoPlaying) return
       this.intervalId = setInterval(() => {
         this.nextPic()
       }, 3000)
+      this.isAutoPlaying = true
     },
     stopAutoPlay() {
       clearInterval(this.intervalId)
+      this.isAutoPlaying = false
+    },
+    turnTo(targetIndex, next=true) {
+      if (this.isMoving) return
+      let index = this.activeIndex
+      if (targetIndex === index) return
+      if (next) {
+        document.querySelector('#a' + index).className = 'show left-leave-active left-leave'
+        document.querySelector('#a' + targetIndex).className = 'show left-enter-active left-enter'
+      }else{
+        document.querySelector('#a' + index).className = 'show right-leave-active right-leave'
+        document.querySelector('#a' + targetIndex).className = 'show right-enter-active right-enter'
+      }
+      this.isMoving = true
+      setTimeout(() => {
+        document.querySelector('#a' + index).className = ''
+        document.querySelector('#a' + targetIndex).className = 'show'
+        this.isMoving = false
+      }, 700)
+      this.activeIndex = targetIndex
     },
     nextPic() {
-      if (this.isMoving) return
-      let index = this.activeIndex
-      let index_change = index >= this.imgObjs.length - 1 ? 0 : index + 1
-      document.querySelector('#a' + index).className = 'show left-leave-active left-leave'
-      document.querySelector('#a' + index_change).className = 'show left-enter-active left-enter'
-      this.isMoving = true
-
-      setTimeout(() => {
-        document.querySelector('#a' + index).className = ''
-        document.querySelector('#a' + index_change).className = 'show'
-        this.isMoving = false
-      }, 500)
-      this.activeIndex = index_change
+      let index_change = this.activeIndex >= this.imgObjs.length - 1 ? 0 : this.activeIndex + 1
+      this.turnTo(index_change,true)
     },
     prePic() {
-      if (this.isMoving) return
+      let index_change = this.activeIndex <= 0 ? this.imgObjs.length - 1 : this.activeIndex - 1
+      this.turnTo(index_change,false)
+    },
+    //next：布尔值，为真时表示向左移动显示下一张
+    toPic(e, targetIndex){
       let index = this.activeIndex
-      let index_change = index <= 0 ? this.imgObjs.length - 1 : index - 1
-      document.querySelector('#a' + index).className = 'show right-leave-active right-leave'
-      document.querySelector('#a' + index_change).className = 'show right-enter-active right-enter'
-      this.isMoving = true
-
-      setTimeout(() => {
-        document.querySelector('#a' + index).className = ''
-        document.querySelector('#a' + index_change).className = 'show'
-        this.isMoving = false
-      }, 500)
-      this.activeIndex = index_change
+      if (targetIndex === index) return
+      if (index < targetIndex) {
+        this.turnTo(targetIndex,true)
+      }else {
+        this.turnTo(targetIndex,false)
+      }
     }
   },
   mounted() {
@@ -81,18 +96,17 @@ export default {
 
 <style scoped lang="less">
 @arrow-size: 40px;
+@focus-height: 562.5px;
 .focus {
   position: relative;
-  height: 562.5px;
+  height: @focus-height;
   overflow: hidden;
-
-  img {
-    width: @page-width;
-  }
 
   ul li {
     opacity: 0;
     position: absolute;
+    width: @page-width;
+    height: @focus-height;
 
     h3 {
       position: absolute;
@@ -104,6 +118,12 @@ export default {
       line-height: 35px;
       background-color: rgba(0, 0, 0, .3);
       color: #ffffff;
+    }
+    img {
+      position: absolute;
+      width: @page-width;
+      top: 50%;
+      transform: translateY(-50%) ;
     }
   }
 
