@@ -4,27 +4,28 @@
       <nav>
         <ul>
           <li>
-            <router-link to="/main">首页</router-link>
+            <router-link to="/main" replace>首页</router-link>
           </li>
           <li>
-            <router-link to="/photoWall">照片墙</router-link>
+            <router-link to="/photoWall" replace>照片墙</router-link>
           </li>
           <li>
-            <router-link to="/msgBoard">讨论区</router-link>
+            <router-link to="/msgBoard" replace>讨论区</router-link>
           </li>
         </ul>
       </nav>
       <!--todo 未登录状态下显示登陆/注册-->
-      <div class="userInfo">
+      <!--todo 点击显示用户操作菜单（个人中心，登出）-->
+      <a class="userInfo" href="javascript:">
         <span>{{userName}}</span>
         <div class="arrowDown"></div>
-        <!--todo 点击箭头显示用户操作菜单（个人中心，登出）-->
-      </div>
+      </a>
     </div>
   </header>
 </template>
 
 <script>
+//todo 当页面向下滚动时，保持头部导航条位置不变，并产生阴影
 import {mapState} from 'vuex'
 export default {
   name: "UserHeader",
@@ -35,7 +36,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@nav-height: 40px;
+@nav-height: 60px;
 header {
   background-color: #fff;
 }
@@ -58,7 +59,8 @@ nav {
 
 .userInfo {
   float: right;
-  padding-right: 25px;
+  padding-right: 10px;
+  margin-right: 15px;
 
   span {
     line-height: @nav-height;

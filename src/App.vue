@@ -16,7 +16,7 @@ export default {
   name: 'App',
   components: {
     UserHeader,UserFooter
-  }
+  },
 }
 </script>
 
@@ -25,7 +25,7 @@ export default {
     background-color: #f6f6f6;
   }
   .w {
-    width: 1000px;
+    width: @page-width;
     margin: 0 auto;
   }
   .clearfix {
@@ -37,5 +37,16 @@ export default {
     &::after {
       clear: both;
     }
+  }
+  @font-face {
+    font-family: 'iconfont';
+    src: url('./assets/fonts/iconfont.ttf?t=1631778171509') format('truetype');
+  }
+  .iconfont {
+    font-family: "iconfont",serif !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 </style>
