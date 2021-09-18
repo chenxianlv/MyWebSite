@@ -6,9 +6,9 @@
 </template>
 
 <script>
+//todo 遮罩
 import Carousel from "@/pages/PhotoWall/Carousel"
 import Menu from "@/components/Menu/Menu"
-//todo 分类栏
 export default {
   name: "PhotoWall",
   components:{
@@ -24,7 +24,7 @@ export default {
 
 <style scoped lang="less">
   #PhotoWall{
-    height: 1500px;
+    padding-bottom: 50px;
     background-color: #fff;
   }
 </style>

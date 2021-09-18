@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <UserHeader></UserHeader>
-    <router-view class="w"></router-view>
+    <router-view class="w shadow"></router-view>
     <UserFooter></UserFooter>
   </div>
 </template>
@@ -48,5 +48,8 @@ export default {
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  .shadow {
+    box-shadow: 0 0 12px 5px #ccc;
   }
 </style>

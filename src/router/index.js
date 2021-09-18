@@ -20,7 +20,12 @@ export default new VueRouter({
       component: MsgBoard
     },{
       path:'/photoWall',
-      component: PhotoWall
+      component: PhotoWall,
+      children:[
+        {
+          path:'renwu'
+        }
+      ]
     },
   ]
 })

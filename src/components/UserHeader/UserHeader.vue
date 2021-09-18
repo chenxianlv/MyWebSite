@@ -39,6 +39,8 @@ export default {
 @nav-height: 60px;
 header {
   background-color: #fff;
+  position: relative;
+  z-index: 9;
 }
 
 nav {
