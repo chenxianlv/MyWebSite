@@ -2,7 +2,7 @@
   <div class="focus w" @mouseenter="isAutoPlaying=false" @mouseleave="isAutoPlaying=true">
     <ul>
       <li ref="index" :id="'a'+index" v-for="(imgObj,index) in imgObjs" :key="index">
-        <a href="javascript:">
+        <a href="javascript:" @click="a_handler" :id="JSON.stringify(imgObj)">
           <img :src="imgObj.url" alt="">
         </a>
         <h3>{{ imgObj.description }}</h3>
@@ -22,10 +22,10 @@
 </template>
 
 <script>
-//todo 点击图片弹出详情
 export default {
   name: "Carousel",
   //imgObjs:[{url:'xx',description:'xx'}]
+  props: ['openMask'],
   data() {
     return {
       olWidth: 0,
@@ -79,6 +79,9 @@ export default {
       }else {
         this.turnTo(targetIndex,false)
       }
+    },
+    a_handler(e){
+      this.openMask(JSON.parse(e.currentTarget.id));
     }
   },
   mounted() {
@@ -105,6 +108,7 @@ export default {
     position: absolute;
     width: @page-width;
     height: @focus-height;
+    left: -200%;
 
     h3 {
       position: absolute;
@@ -164,6 +168,7 @@ export default {
 
   .show {
     opacity: 1;
+    left: 0;
   }
 
   .right-leave-active {

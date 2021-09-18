@@ -21,11 +21,6 @@ export default new VueRouter({
     },{
       path:'/photoWall',
       component: PhotoWall,
-      children:[
-        {
-          path:'renwu'
-        }
-      ]
     },
   ]
 })

@@ -3,14 +3,8 @@
     <div class="w clearfix">
       <nav>
         <ul>
-          <li>
-            <router-link to="/main" replace>首页</router-link>
-          </li>
-          <li>
-            <router-link to="/photoWall" replace>照片墙</router-link>
-          </li>
-          <li>
-            <router-link to="/msgBoard" replace>讨论区</router-link>
+          <li v-for="(item, index) in menuItems" :key="index">
+            <router-link :to="item.to" active-class="active" replace>{{item.title}}</router-link>
           </li>
         </ul>
       </nav>
@@ -29,9 +23,18 @@
 import {mapState} from 'vuex'
 export default {
   name: "UserHeader",
+  data() {
+    return {
+      menuItems: [
+          {title:'首页',to:'/main'},
+          {title:'照片墙',to:'/photoWall'},
+          {title:'留言板',to:'/msgBoard'},
+      ]
+    }
+  },
   computed:{
     ...mapState(['userName'])
-  }
+  },
 }
 </script>
 
@@ -42,19 +45,23 @@ header {
   position: relative;
   z-index: 9;
 }
-
+.active {
+  color: #0066ff;
+}
 nav {
   float: left;
 
-  & li {
+  li {
     float: left;
     a {
       display: block;
       height: @nav-height;
       line-height: @nav-height;
-      border: 1px solid red;
       padding: 0 10px;
       background-color: #fff;
+    }
+    &:hover a{
+      color: #175199;
     }
   }
 }

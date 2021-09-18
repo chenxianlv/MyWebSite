@@ -1,5 +1,6 @@
 export default {
   userName: 'Mr.Chen',
+  selectedImg: {url:'',description:'',date:0,upper:''},
   recommendImgs: [
     {url: require('@/upload/imgs/recommends/recommend_1.jpg'), description: '松鼠', upper:'Mr.Chen', date:1631886421,title:'动物'},
     {url: require('@/upload/imgs/recommends/recommend_2.jpg'), description: '红玫瑰', upper:'Mr.Chen', date:1631886121,title:'花卉'},
@@ -21,14 +22,14 @@ export default {
     },
     {
       title: '建筑', imgs: [
-        {url: require('@/upload/imgs/jianzhu/jianzhu_1.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
-        {url: require('@/upload/imgs/jianzhu/jianzhu_2.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
-        {url: require('@/upload/imgs/jianzhu/jianzhu_3.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
-        {url: require('@/upload/imgs/jianzhu/jianzhu_4.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
-        {url: require('@/upload/imgs/jianzhu/jianzhu_5.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
-        {url: require('@/upload/imgs/jianzhu/jianzhu_6.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
-        {url: require('@/upload/imgs/jianzhu/jianzhu_7.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
-        {url: require('@/upload/imgs/jianzhu/jianzhu_8.jpg'), description: '', upper:'Mr.Chen', date:1631886421},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_1.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1631296251},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_2.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1631382921},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_3.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1631886421},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_4.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1631826291},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_5.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1632983425},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_6.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1631382291},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_7.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1621883295},
+        {url: require('@/upload/imgs/jianzhu/jianzhu_8.jpg'), description: '这是一张xx的照片', upper:'Mr.Chen', date:1631296251},
       ]
     },
     {

@@ -9,7 +9,7 @@
     </ul>
     <ul class="imgsContainer clearfix" :key="titleNow">
       <li v-for="(img,index) in imgs" :key="index">
-        <a href="javascript:">
+        <a href="javascript:" @click="a_handler" :id="JSON.stringify(img)">
           <img :src="img.url" alt="">
         </a>
         <span id="upper">{{img.upper}}</span>
@@ -23,6 +23,7 @@
 <script>
 export default {
   name: "Menu",
+  props:['openMask'],
   data() {
     return {
       titleNow: '人物',
@@ -35,7 +36,7 @@ export default {
     },
   },
   methods: {
-    formatDate(time) {
+    formatDate(time, detailMode=false) {
       let date = new Date(time*1000)
       let y = date.getFullYear();
       let MM = date.getMonth() + 1;
@@ -46,7 +47,16 @@ export default {
       h = h < 10 ? "0" + h : h;
       let m = date.getMinutes();
       m = m < 10 ? "0" + m : m;
-      return y + "-" + MM + "-" + d + " " + h + ":" + m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      if (detailMode) {
+        return y + "年" + MM + "月" + d + "日 " + h + ":" + m + ':'+ s;
+      }else {
+        return y + "-" + MM + "-" + d + " " + h + ":" + m;
+      }
+    },
+    a_handler(e){
+      this.openMask(JSON.parse(e.currentTarget.id));
     }
   },
 }
