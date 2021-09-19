@@ -97,7 +97,7 @@ export default {
   }
 
   .imgsContainer {
-    width: @page-width + 100px;
+    width: @page-width + 10px;
     li {
       float: left;
       width: @img-width;

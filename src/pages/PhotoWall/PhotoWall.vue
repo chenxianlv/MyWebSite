@@ -8,7 +8,7 @@
 
 <script>
 import Carousel from "@/pages/PhotoWall/Carousel"
-import Menu from "@/components/Menu/Menu"
+import Menu from "@/pages/PhotoWall/Menu"
 import ImgInfoMask from "@/components/masks/ImgInfoMask"
 import {mapActions} from 'vuex'
 export default {
