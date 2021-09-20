@@ -11,7 +11,7 @@ export default new VueRouter({
   routes:[
     {
       path:'/',
-      redirect:'/main'
+      redirect:'/photoWall'
     },{
       path:'/main',
       component: Main

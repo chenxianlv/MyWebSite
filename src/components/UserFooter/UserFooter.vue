@@ -11,6 +11,6 @@ export default {
 <style scoped lang="less">
   footer {
     height: 100px;
-    background-color: darkgoldenrod;
+    //background-color: darkgoldenrod;
   }
 </style>
