@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   name: "Carousel",
   //imgObjs:[{url:'xx',description:'xx'}]
@@ -81,8 +82,9 @@ export default {
       }
     },
     a_handler(e){
-      this.openMask(JSON.parse(e.currentTarget.id));
-    }
+      this.openMask(this.showImgDetails,JSON.parse(e.currentTarget.id));
+    },
+    ...mapActions(['showImgDetails'])
   },
   mounted() {
     this.olWidth = document.querySelector('.focus .circle').offsetWidth

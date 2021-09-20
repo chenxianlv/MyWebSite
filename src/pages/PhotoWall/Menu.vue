@@ -8,12 +8,14 @@
       </li>
     </ul>
     <ul class="imgsContainer clearfix" :key="titleNow">
-      <li v-for="(img,index) in imgs" :key="index">
+      <li class="hover-float" v-for="(img,index) in imgs" :key="index">
         <a href="javascript:" @click="a_handler" :id="JSON.stringify(img)">
           <img :src="img.url" alt="">
         </a>
         <span id="upper">{{img.upper}}</span>
-        <span id="date">{{formatDate(img.date)}}</span>
+        <span id="date">{{
+            handleFormatData(img.date)
+          }}</span>
         <div id="description" :title="img.description"> {{img.description}}</div>
       </li>
     </ul>
@@ -21,6 +23,8 @@
 </template>
 
 <script>
+import {formatDate} from '@/assets/js'
+import {mapActions} from "vuex";
 export default {
   name: "Menu",
   props:['openMask'],
@@ -36,27 +40,12 @@ export default {
     },
   },
   methods: {
-    formatDate(time, detailMode=false) {
-      let date = new Date(time*1000)
-      let y = date.getFullYear();
-      let MM = date.getMonth() + 1;
-      MM = MM < 10 ? "0" + MM : MM;
-      let d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      let h = date.getHours();
-      h = h < 10 ? "0" + h : h;
-      let m = date.getMinutes();
-      m = m < 10 ? "0" + m : m;
-      let s = date.getSeconds();
-      s = s < 10 ? "0" + s : s;
-      if (detailMode) {
-        return y + "年" + MM + "月" + d + "日 " + h + ":" + m + ':'+ s;
-      }else {
-        return y + "-" + MM + "-" + d + " " + h + ":" + m;
-      }
-    },
     a_handler(e){
-      this.openMask(JSON.parse(e.currentTarget.id));
+      this.openMask(this.showImgDetails,JSON.parse(e.currentTarget.id));
+    },
+    ...mapActions(['showImgDetails']),
+    handleFormatData(){
+      return formatDate(...arguments)
     }
   },
 }
@@ -104,9 +93,8 @@ export default {
       height: ($width/16)*9 + 60px;
       margin: 20px (@page-width - @img-width*3)*0.2 20px (@page-width - @img-width*3)*0.15;
       padding: 15px;
-      border: 1px solid #e3e2e2;
-      border-radius: 8px;
-      transition: all 0.4s;
+      border: 1px solid @tint-border-color;
+      border-radius: @common-border-radius;
 
       img {
         display: block;
@@ -115,7 +103,7 @@ export default {
       }
       #upper,#date {
         font-size: 14px;
-        color: #7e7c7c;
+        color: @tint-font-color;
         margin-bottom: 9px;
       }
       #upper {
@@ -130,10 +118,6 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-      }
-      &:hover {
-        transform: translateY(-2%);
-        box-shadow: 1px 4px 10px 1px #ccc;
       }
     }
   }

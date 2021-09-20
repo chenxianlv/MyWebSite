@@ -1,0 +1,32 @@
+.clearfix {
+  *zoom:1;
+  &::before,&::after {
+    content: '';
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}
+@font-face {
+  font-family: 'iconfont';
+  src: url('../fonts/iconfont.ttf?t=1632100575037') format('truetype');
+}
+.iconfont {
+  font-family: "iconfont",Microsoft YaHei,serif !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hover-float {
+  transition: transform .4s,box-shadow .4s;
+}
+.hover-float:hover {
+  transform: translateY(-2%);
+  box-shadow: 1px 4px 10px 1px #ccc;
+}
+.w {
+  width: @page-width;
+  margin: 0 auto;
+}

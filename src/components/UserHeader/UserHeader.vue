@@ -58,6 +58,7 @@ header {
   width: 100%;
   position: fixed;
   z-index: 9;
+  border-bottom: solid 1px @tint-border-color;
 }
 
 .active {
