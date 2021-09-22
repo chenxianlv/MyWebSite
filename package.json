@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "eslint": "eslint ./src"
+    "eslint": "eslint ./src",
+    "devstart": "nodemon ./server/server.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -25,6 +26,7 @@
     "less": "^4.1.1",
     "less-loader": "^7.3.0",
     "mongoose": "^6.0.7",
+    "nodemon": "^2.0.12",
     "style-resources-loader": "^1.4.1",
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
     "vue-template-compiler": "^2.6.11",

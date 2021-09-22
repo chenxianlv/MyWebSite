@@ -1,23 +1,65 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const MessageSchema = require('./MessageSchema')
+
+mongoose.connect('mongodb://127.0.0.1:27017/my_website')
+mongoose.connection.once('open',function () {
+  console.log('数据库连接成功')
+})
+let msgModel = mongoose.model('messages',MessageSchema)
+
 const app = express()
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-let mongoose = require('mongoose')
-mongoose.connect('mongodb://127.0.0.1:27017/my_website')
+function handleOriMsg(docs) {
+  let realDocs = []
+  docs.forEach((e) => {
+    if (e.title === "" || !e.reply) return -1
+    let realReply = []
+    e.reply.forEach((id) => {
+      realReply.push(docs.find(ele => ele._id.toString() === id.toString()))
+    })
+    e.reply = realReply
+    realDocs.push(e)
+  })
+  return realDocs
+}
 
-mongoose.connection.once('open',function () {
-  console.log('数据库连接成功')
-})
-
-app.get('/test',(req,res) => {
+app.get('/getMessage',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  res.send({name:'chen',age:18})
+  msgModel.find({deleted:false},null,{sort:{date:-1}},(err,docs) => {
+    if (!err) {
+      res.send(handleOriMsg(docs))
+    }else {
+      res.status(500).send(err)
+    }
+  })
 })
+
+app.get('/deleteMessage',(req,res) => {
+  res.setHeader('Access-Control-Allow-Origin','*')
+  //todo 继续完成
+  console.log(req.query);
+  res.send(200)
+  // msgModel.find({deleted:false},null,{sort:{date:-1}},(err,docs) => {
+  //   if (!err) {
+  //     res.send(200)
+  //   }else {
+  //     res.status(500).send(err)
+  //   }
+  // })
+})
+
 app.post('/commit',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  console.log(req.body)
+  // msgModel.find((err,docs) => {
+  //   console.log(typeof docs[0]._id)
+  // })
+  // msgModel.findById("6149e827fe0eb658165d887f",(err,docs) => {
+  //   console.log(docs)
+  // })
   res.send(200)
 })
 app.listen(8000,() => {
