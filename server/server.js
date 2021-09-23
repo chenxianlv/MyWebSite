@@ -19,7 +19,10 @@ function handleOriMsg(docs) {
     if (e.title === "" || !e.reply) return -1
     let realReply = []
     e.reply.forEach((id) => {
-      realReply.push(docs.find(ele => ele._id.toString() === id.toString()))
+      let target = docs.find(ele => ele._id.toString() === id.toString())
+      if (target) {
+        realReply.push(target)
+      }
     })
     e.reply = realReply
     realDocs.push(e)
@@ -29,7 +32,7 @@ function handleOriMsg(docs) {
 
 app.get('/getMessage',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  msgModel.find({deleted:false},null,{sort:{date:-1}},(err,docs) => {
+  msgModel.find({deleted:false},"-deleted",{sort:{date:-1}},(err,docs) => {
     if (!err) {
       res.send(handleOriMsg(docs))
     }else {
@@ -40,16 +43,36 @@ app.get('/getMessage',(req,res) => {
 
 app.get('/deleteMessage',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  //todo 继续完成
-  console.log(req.query);
-  res.send(200)
-  // msgModel.find({deleted:false},null,{sort:{date:-1}},(err,docs) => {
-  //   if (!err) {
-  //     res.send(200)
-  //   }else {
-  //     res.status(500).send(err)
-  //   }
-  // })
+  msgModel.findByIdAndUpdate(req.query.id, {$set:{deleted:true}},null,(err) => {
+    if (!err) {
+      res.send(200)
+    }else {
+      res.status(500).send(err)
+    }
+  })
+})
+
+app.post('/addMessage',(req,res) => {
+  res.setHeader('Access-Control-Allow-Origin','*')
+  msgModel.create(JSON.parse(JSON.stringify(req.body)),(err,doc) => {
+    if (!err) {
+      res.send(doc)
+    }else {
+      res.status(500).send(err)
+    }
+  })
+})
+
+app.post('/updateMessage',(req,res) => {
+  res.setHeader('Access-Control-Allow-Origin','*')
+  let body = JSON.parse(JSON.stringify(req.body))
+  msgModel.findByIdAndUpdate(body.id, {$set:body.doc},null,(err) => {
+    if (!err) {
+      res.send(200)
+    }else {
+      res.status(500).send(err)
+    }
+  }).then()
 })
 
 app.post('/commit',(req,res) => {
@@ -62,6 +85,7 @@ app.post('/commit',(req,res) => {
   // })
   res.send(200)
 })
+
 app.listen(8000,() => {
   console.log('8000端口监听中')
 })
