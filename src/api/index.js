@@ -15,3 +15,5 @@ export const updateMessage = (obj) => ajax(`${BASE_URL}/updateMessage`, obj,"POS
 
 // obj:{title:'xxx',msg:'xxx',usr:'xxx',date:时间戳（去掉代表毫秒的后三位）}
 export const addMessage = (obj) => ajax(`${BASE_URL}/addMessage`, obj,"POST")
+
+export const getPicture = () => ajax(`${BASE_URL}/getPicture`)

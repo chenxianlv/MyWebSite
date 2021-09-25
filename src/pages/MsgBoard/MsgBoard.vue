@@ -1,6 +1,8 @@
 <template>
   <div class="MsgBoard">
-    <MsgBox :openMask="openMask"></MsgBox>
+    <MsgBox v-if="requestState === 'success'" :openMask="openMask"></MsgBox>
+    <div class="failed" v-if="requestState === 'failed'">获取数据失败！</div>
+    <div class="loading" v-if="requestState === 'waiting'">加载中...</div>
     <UserMask :closeMask="closeMask" v-if="isMaskShowing">
       <div class="slot-box">
         <h3>{{ selectedMsg.title }}</h3>
@@ -32,6 +34,11 @@ import {mapActions, mapState} from 'vuex'
 
 export default {
   name: "MsgBoard",
+  data() {
+    return {
+      requestState: 'waiting'
+    }
+  },
   components: {
     MsgBox, UserMask
   },
@@ -48,10 +55,14 @@ export default {
       return msg.replace(/(\n|\r|\\n)+/g, '<br>')
     }
   },
-  mounted() {
-    this.getMessage()
+  created() {
+    this.getMessage().then(() => {
+      this.requestState = 'success'
+    }).catch(err => {
+      this.requestState = 'failed'
+      console.log(err)
+    })
   }
-
 }
 </script>
 

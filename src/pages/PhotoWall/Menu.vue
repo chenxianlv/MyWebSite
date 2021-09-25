@@ -2,21 +2,19 @@
   <div class="box">
     <ul class="nav clearfix">
       <li v-for="(imgInfo,index) in imgInfos" :key="index">
-        <a @click="titleNow=imgInfo.title" :class="{active:imgInfo.title===titleNow}" href="javascript:">
-          {{ imgInfo.title }}
+        <a @click="categoryNow=imgInfo.category" :class="{active:imgInfo.category===categoryNow}" href="javascript:">
+          {{ imgInfo.category }}
         </a>
       </li>
     </ul>
-    <ul class="imgsContainer clearfix" :key="titleNow">
-      <li class="hover-float" v-for="(img,index) in imgs" :key="index">
+    <ul class="imgsContainer clearfix" :key="categoryNow">
+      <li class="hover-float iconfont" v-for="(img,index) in imgs" :key="index">
         <a href="javascript:" @click="a_handler" :id="JSON.stringify(img)">
           <img :src="img.url" alt="">
         </a>
-        <span id="upper">{{img.upper}}</span>
-        <span id="date">{{
-            handleFormatData(img.date)
-          }}</span>
-        <div id="description" :title="img.description"> {{img.description}}</div>
+        <span id="upper">&#xe682;&nbsp;{{img.user}}</span>
+        <span id="date">&#xe680;&nbsp;{{handleFormatData(img.date) }}</span>
+        <!--<div id="description" :title="img.description"> {{img.description}}</div>-->
       </li>
     </ul>
   </div>
@@ -24,19 +22,19 @@
 
 <script>
 import {formatDate} from '@/assets/js'
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 export default {
   name: "Menu",
   props:['openMask'],
   data() {
     return {
-      titleNow: '人物',
-      imgInfos: this.$store.state.imgInfos
+      categoryNow: this.$store.state.imgInfos[0].category,
     }
   },
   computed: {
+    ...mapState(['imgInfos']),
     imgs() {
-      return this.imgInfos.find(e => e.title === this.titleNow).imgs
+      return this.imgInfos.find(e => e.category === this.categoryNow).imgs
     },
   },
   methods: {
@@ -87,10 +85,11 @@ export default {
 
   .imgsContainer {
     width: @page-width + 10px;
+    padding-bottom: 30px;
     li {
       float: left;
       width: @img-width;
-      height: ($width/16)*9 + 60px;
+      //height: ($width/16)*9 + 60px;
       margin: 20px (@page-width - @img-width*3)*0.2 20px (@page-width - @img-width*3)*0.15;
       padding: 15px;
       border: 1px solid @tint-border-color;
@@ -104,7 +103,8 @@ export default {
       #upper,#date {
         font-size: 14px;
         color: @tint-font-color;
-        margin-bottom: 9px;
+        margin-top: 3px;
+        //margin-bottom: 9px;
       }
       #upper {
         float: left;
@@ -112,13 +112,13 @@ export default {
       #date {
         float: right;
       }
-      #description {
-        width: 100%;
-        float: left;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+      //#description {
+      //  width: 100%;
+      //  float: left;
+      //  white-space: nowrap;
+      //  overflow: hidden;
+      //  text-overflow: ellipsis;
+      //}
     }
   }
 }

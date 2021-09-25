@@ -1,3 +1,4 @@
+@import "variable";
 .clearfix {
   *zoom:1;
   &::before,&::after {
@@ -29,4 +30,21 @@
 .w {
   width: @page-width;
   margin: 0 auto;
+}
+.failed,.loading {
+  margin: 50px 0;
+  line-height: 50px;
+  font-size: 50px;
+  text-align: center;
+  color: @tint-font-color;
+}
+@keyframes loading_animation {
+  0% {
+    opacity: 0.4;
+  }100%{
+  opacity: 1;
+     }
+}
+.loading {
+  animation: loading_animation 1s ease infinite alternate;
 }

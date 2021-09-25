@@ -5,7 +5,7 @@ module.exports = {
       preProcessor: 'less',
       patterns: [
         path.resolve(__dirname, "src/assets/less/variable.less"),
-        path.resolve(__dirname, "src/assets/less/global.less"),
+        // path.resolve(__dirname, "src/assets/less/global.less"),
       ] // 引入全局样式变量
     }
   }

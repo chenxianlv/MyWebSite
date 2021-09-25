@@ -25,7 +25,6 @@
 import {mapActions} from 'vuex'
 export default {
   name: "Carousel",
-  //imgObjs:[{url:'xx',description:'xx'}]
   props: ['openMask'],
   data() {
     return {
