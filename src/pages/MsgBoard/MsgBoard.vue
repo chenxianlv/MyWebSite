@@ -13,7 +13,7 @@
           <li v-for="(reply,index) in selectedMsg.reply" :key="index">
             <div class="otherInfo iconfont">
               <span>&#xe682;&nbsp;{{ reply.user }}</span>
-              <span>&#xe680;&nbsp;{{ handleFormatData(selectedMsg.date) }}</span>
+              <span>&#xe680;&nbsp;{{ handleFormatData(reply.date) }}</span>
             </div>
             <div class="msg" v-html="handleMsg(reply.msg)"></div>
           </li>
@@ -28,7 +28,7 @@ import {formatDate} from "@/assets/js"
 import MsgBox from "@/pages/MsgBoard/MsgBox"
 import UserMask from "@/components/UserMask/UserMask";
 import mixin_UserMask from "@/assets/mixin/UserMask"
-import {mapState} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
   name: "MsgBoard",
@@ -40,12 +40,16 @@ export default {
     ...mapState(['selectedMsg']),
   },
   methods: {
+    ...mapActions(['getMessage']),
     handleFormatData(date) {
       return formatDate(date)
     },
     handleMsg(msg) {
       return msg.replace(/(\n|\r|\\n)+/g, '<br>')
     }
+  },
+  mounted() {
+    this.getMessage()
   }
 
 }
@@ -58,7 +62,6 @@ export default {
 }
 
 .slot-box {
-  width: 770px;
   line-height: 22px;
   padding: 10px 10px 0;
 

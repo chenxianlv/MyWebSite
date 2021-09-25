@@ -2,7 +2,7 @@
   <div class="box">
     <ul class="msgBox">
       <li class="hover-float" v-for="(msgInfo,index) in msgInfos" :key="index">
-        <a :id="msgInfo.id" href="javascript:" @click="clickHandler">
+        <a :id="msgInfo._id" href="javascript:" @click="clickHandler">
           <h3>{{ msgInfo.title }}</h3>
           <div class="msg">{{ msgInfo.msg }}</div>
         </a>

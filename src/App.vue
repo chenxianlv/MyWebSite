@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <button @click="hand">测试测试测试测试测试测试测试测试</button>
+    <!--<button @click="hand">测试测试测试测试测试测试测试测试</button>-->
     <UserHeader></UserHeader>
     <router-view class="w body-common"></router-view>
     <SideBar></SideBar>
@@ -13,8 +13,8 @@ import './assets/css/reset.css'
 import UserHeader from "@/components/UserHeader/UserHeader"
 import UserFooter from "@/components/UserFooter/UserFooter"
 import SideBar from "@/components/SideBar/SideBar"
-import axios from "axios";
-import qs from 'qs';
+// import axios from "axios";
+// import qs from 'qs';
 
 export default {
   name: 'App',
@@ -23,17 +23,17 @@ export default {
     UserFooter,
     SideBar
   },
-  methods: {
-    hand() {
-      axios({
-        method: "POST",
-        url: 'http://127.0.0.1:8000/addMessage',
-        data: qs.stringify({user: 'Mr.chen'})
-      }).then(function (response) {
-        console.log(response.data)
-      })
-    }
-  }
+  // methods: {
+  //   hand() {
+  //     axios({
+  //       method: "POST",
+  //       url: 'http://127.0.0.1:8000/addMessage',
+  //       data: qs.stringify({user: 'Mr.chen'})
+  //     }).then(function (response) {
+  //       console.log(response.data)
+  //     })
+  //   }
+  // }
 }
 </script>
 

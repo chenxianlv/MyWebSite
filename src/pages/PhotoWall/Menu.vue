@@ -41,9 +41,9 @@ export default {
   },
   methods: {
     a_handler(e){
-      this.openMask(this.showImgDetails,JSON.parse(e.currentTarget.id));
+      this.openMask(this.changeSelectedImg,JSON.parse(e.currentTarget.id));
     },
-    ...mapActions(['showImgDetails']),
+    ...mapActions(['changeSelectedImg']),
     handleFormatData(){
       return formatDate(...arguments)
     }

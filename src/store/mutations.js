@@ -1,8 +1,11 @@
 export default {
-  SHOW_IMG_DETAILS(state,value){
+  CHANGE_SELECTED_IMG(state, value){
     state.selectedImg = value
   },
   CHANGE_SELECTED_MSG(state,value){
-    state.selectedMsg = state.msgInfos.find(e=>e.id===Number(value))
+    state.selectedMsg = state.msgInfos.find(e=>e._id===value)
+  },
+  UPDATE_MSG(state,value){
+    state.msgInfos = value
   }
 }

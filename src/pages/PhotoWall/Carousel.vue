@@ -82,9 +82,9 @@ export default {
       }
     },
     a_handler(e){
-      this.openMask(this.showImgDetails,JSON.parse(e.currentTarget.id));
+      this.openMask(this.changeSelectedImg,JSON.parse(e.currentTarget.id));
     },
-    ...mapActions(['showImgDetails'])
+    ...mapActions(['changeSelectedImg'])
   },
   mounted() {
     this.olWidth = document.querySelector('.focus .circle').offsetWidth

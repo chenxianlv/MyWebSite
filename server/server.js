@@ -43,7 +43,7 @@ app.get('/getMessage',(req,res) => {
 
 app.get('/deleteMessage',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  msgModel.findByIdAndUpdate(req.query.id, {$set:{deleted:true}},null,(err) => {
+  msgModel.findByIdAndUpdate(req.query._id, {$set:{deleted:true}},null,(err) => {
     if (!err) {
       res.send(200)
     }else {
@@ -54,7 +54,10 @@ app.get('/deleteMessage',(req,res) => {
 
 app.post('/addMessage',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  msgModel.create(JSON.parse(JSON.stringify(req.body)),(err,doc) => {
+  let data = JSON.parse(JSON.stringify(req.body))
+  data.reply = []
+  data.deleted = false
+  msgModel.create(data,(err,doc) => {
     if (!err) {
       res.send(doc)
     }else {
@@ -66,24 +69,34 @@ app.post('/addMessage',(req,res) => {
 app.post('/updateMessage',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
   let body = JSON.parse(JSON.stringify(req.body))
-  msgModel.findByIdAndUpdate(body.id, {$set:body.doc},null,(err) => {
+  msgModel.findByIdAndUpdate(body._id, {$set:body.doc},null,(err) => {
     if (!err) {
       res.send(200)
     }else {
       res.status(500).send(err)
     }
-  }).then()
+  })
 })
 
-app.post('/commit',(req,res) => {
+app.post('/addReply',(req,res) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  // msgModel.find((err,docs) => {
-  //   console.log(typeof docs[0]._id)
-  // })
-  // msgModel.findById("6149e827fe0eb658165d887f",(err,docs) => {
-  //   console.log(docs)
-  // })
-  res.send(200)
+  let data = JSON.parse(JSON.stringify(req.body))
+  data.doc.reply = []
+  data.doc.title = ''
+  data.doc.deleted = false
+  msgModel.create(data.doc,(err,doc) => {
+    if (!err) {
+      msgModel.findByIdAndUpdate(data._id, {$addToSet:{reply:mongoose.Types.ObjectId(doc._id)}},null,(err) => {
+        if (!err) {
+          res.send(200)
+        }else {
+          res.status(500).send(err)
+        }
+      })
+    }else {
+      res.status(500).send(err)
+    }
+  })
 })
 
 app.listen(8000,() => {
